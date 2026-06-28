@@ -1,0 +1,9 @@
+POST http://localhost:3000/customer
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiZXhwIjoxNzgyNjg2NzA1LCJ1c2VyIjoxMDAwMH0.bHoQkEl8SlMcIcufM--kg6atoz2c4USz6NdQI3I0bR0
+
+{
+    "name": "Company-a2",
+    "email": "company_a2.doe@example.com",
+    "phone": "05131321523"
+}
