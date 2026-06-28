@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"com.github/FelipecgPereira/go-jobs/db"
+	"com.github/FelipecgPereira/go-jobs/utils"
 )
 
 type User struct {
@@ -29,7 +30,13 @@ func (input *User) Save() error {
 
 	input.userCreateAt()
 
-	result, err := stmt.Exec(input.Email, input.Password, input.Name, input.createAt)
+	hashedPassword, err := utils.HashPassword(input.Password)
+
+	if err != nil {
+		return err
+	}
+
+	result, err := stmt.Exec(input.Email, hashedPassword, input.Name, input.createAt)
 
 	if err != nil {
 		return err
