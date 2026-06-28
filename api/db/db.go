@@ -47,8 +47,10 @@ func createTables() {
 		name TEXT NOT NULL,
 		email TEXT NOT NULL UNIQUE,
 		phone TEXT,
+		user_id INTEGER,
 		create_at DATETIME,
-		update_at DATETIME
+		update_at DATETIME,
+		FOREIGN KEY(user_id) REFERENCES users(id)
 	);
 	`
 	_, err = DB.Exec(createCustomersTable)
@@ -64,8 +66,10 @@ func createTables() {
 		price DECIMAL (8,2),
 		start_date DATETIME,
 		end_date DATETIME,
+		user_id INTEGER,
 		create_at DATETIME,
-		update_at DATETIME
+		update_at DATETIME,
+		FOREIGN KEY(user_id) REFERENCES users(id)
 	);
 	`
 	_, err = DB.Exec(createProjectTable)
@@ -109,7 +113,8 @@ func initializeSequences() {
 func createIndexes() {
 	indexes := []string{
 		`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`,
-		`CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email);`,
+		`CREATE INDEX IF NOT EXISTS idx_customers_user_id ON customers(user_id);`,
+		`CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id);`,
 		`CREATE INDEX IF NOT EXISTS idx_b2b_customer_id ON b2b(customer_id);`,
 		`CREATE INDEX IF NOT EXISTS idx_b2b_user_id ON b2b(user_id);`,
 		`CREATE INDEX IF NOT EXISTS idx_b2b_project_id ON b2b(project_id);`,
