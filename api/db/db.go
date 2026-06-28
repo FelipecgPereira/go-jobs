@@ -19,6 +19,7 @@ func Init() {
 	DB.SetMaxIdleConns(10)
 
 	createTables()
+	createIndexes()
 
 }
 
@@ -89,4 +90,35 @@ func createTables() {
 		panic(err)
 	}
 
+	// Initialize ID sequences to start at 10000
+	initializeSequences()
+}
+
+func initializeSequences() {
+	tables := []string{"users", "customers", "projects", "b2b"}
+
+	for _, table := range tables {
+		query := `INSERT OR IGNORE INTO sqlite_sequence (name, seq) VALUES (?, ?)`
+		_, err := DB.Exec(query, table, 9999)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
+func createIndexes() {
+	indexes := []string{
+		`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`,
+		`CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email);`,
+		`CREATE INDEX IF NOT EXISTS idx_b2b_customer_id ON b2b(customer_id);`,
+		`CREATE INDEX IF NOT EXISTS idx_b2b_user_id ON b2b(user_id);`,
+		`CREATE INDEX IF NOT EXISTS idx_b2b_project_id ON b2b(project_id);`,
+	}
+
+	for _, indexSQL := range indexes {
+		_, err := DB.Exec(indexSQL)
+		if err != nil {
+			panic(err)
+		}
+	}
 }
