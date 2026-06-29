@@ -1,0 +1,10 @@
+POST http://localhost:3000/project
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiZXhwIjoxNzgyNjkwNTg2LCJ1c2VyIjoxMDAwMH0.dO-ovinPYF0_N4WtVsig_DXviXo6eDi3BuAbhheUy_4
+
+{
+    "name": "Photo shape",
+    "price": 2500.99,
+    "startDate": "2026-07-01T18:00:00Z",
+    "endDate": "2026-07-31T18:00:00Z"
+}

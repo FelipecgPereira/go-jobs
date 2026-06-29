@@ -44,7 +44,7 @@ func getCustomers(context *gin.Context) {
 func getCustmerById(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "Invalid event ID"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Invalid customer ID"})
 		return
 	}
 
@@ -64,7 +64,7 @@ func getCustmerById(context *gin.Context) {
 func updateCustomer(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "Invalid event ID"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Invalid customer ID"})
 		return
 	}
 
