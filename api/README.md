@@ -1,6 +1,6 @@
 # Go Jobs API
 
-A small Go REST API for user signup, login, and customer management using Gin and SQLite.
+A small Go REST API for user signup, login, customer/project management and B2B payment summaries using Gin and SQLite.
 
 ## Architecture
 
@@ -8,20 +8,21 @@ A small Go REST API for user signup, login, and customer management using Gin an
 Client
   ├─ POST /signup       -> create user
   ├─ POST /auth         -> login and receive JWT
-  └─ /customer/*        -> protected routes using JWT token
+  ├─ /customer/*        -> customer management (protected)
+  ├─ /project/*         -> project management (protected)
+  └─ /b2b/*             -> b2b operations (protected)
+```
 
 Protected request flow:
-  Client -> Authorization: Bearer <token> -> Gin middleware -> route handler -> SQLite DB
-```
+
+Client -> Authorization: Bearer <token> -> Gin middleware -> route handler -> SQLite DB
 
 ## Features
 
-- `POST /signup` -> create a new user
-- `POST /auth` -> authenticate existing users and return JWT
-- `POST /customer` -> create a customer (authenticated)
-- `GET /customer` -> list authenticated user's customers
-- `GET /customer/:id` -> get a single customer by ID (authenticated)
-- `PUT /customer/:id` -> update a customer by ID (authenticated)
+- User signup and JWT authentication
+- Customer CRUD for authenticated users
+- Project CRUD for authenticated users
+- B2B creation/update and payment summary by status/date range
 
 ## Run the app
 
@@ -35,7 +36,7 @@ The server listens on port `3000`.
 ## Authentication
 
 - Login with `POST /auth` and receive a JWT token.
-- Send the token in the `Authorization` header for all `/customer` routes.
+- Send the token in the `Authorization` header for all `/customer`, `/project` and `/b2b` routes.
 
 Example header:
 
@@ -88,6 +89,8 @@ Response:
   "token": "..."
 }
 ```
+
+## Customer routes
 
 ### Create customer
 
@@ -169,8 +172,163 @@ Response:
 }
 ```
 
+## Project routes
+
+### Create project
+
+`POST /project/`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+Request body:
+
+```json
+{
+  "name": "Photo shape",
+  "price": 2500.99,
+  "startDate": "2026-07-01T18:00:00Z",
+  "endDate": "2026-07-31T18:00:00Z"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Project created successfully"
+}
+```
+
+### List projects
+
+`GET /project`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+### Get project by ID
+
+`GET /project/:id`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+### Update project
+
+`PUT /project/:id`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+Request body:
+
+```json
+{
+  "name": "Photo shape revised",
+  "price": 2900.00,
+  "startDate": "2026-07-01T18:00:00Z",
+  "endDate": "2026-08-01T18:00:00Z"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Project updated successfully"
+}
+```
+
+## B2B routes
+
+### Create B2B
+
+`POST /b2b/`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+Request body:
+
+```json
+{
+  "customerId": 10001,
+  "projectId": 10001,
+  "status": "active"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "b2b created successfully"
+}
+```
+
+### Update B2B
+
+`PUT /b2b/:id`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+Request body: any valid B2B fields to update.
+
+Response:
+
+```json
+{
+  "message": "B2B updated successfully"
+}
+```
+
+### Sum payments
+
+`GET /b2b/sum?status=active&start=2026-07-01T00:00:00&end=2026-07-28T23:59:59`
+
+Headers:
+
+```http
+Authorization: Bearer <token>
+```
+
+Query params:
+
+- `status` - B2B status value
+- `start` - start datetime in `YYYY-MM-DDTHH:MM:SS`
+- `end` - end datetime in `YYYY-MM-DDTHH:MM:SS`
+
+Response:
+
+```json
+{
+  "total": 12345.67
+}
+```
+
 ## Notes
 
 - The database file is `go_job.db` in the project root.
 - Authentication middleware validates the JWT and sets `userId` in the request context.
-- Customer routes are scoped under `/customer` and require a valid token.
+- All `/customer`, `/project` and `/b2b` routes require a valid token.
+- Project date fields are stored as SQLite `DATETIME` values.
