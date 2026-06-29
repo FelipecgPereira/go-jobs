@@ -1,0 +1,33 @@
+<section class="auth-card">
+  <div class="auth-header">
+    <h2>{{ isLoginMode ? 'Entrar no Go Jobs' : 'Criar conta' }}</h2>
+    <p>Conecte-se à API Go para gerenciar clientes, projetos e B2B.</p>
+  </div>
+
+  <form [formGroup]="authForm" (ngSubmit)="submit()">
+    <div class="field" *ngIf="!isLoginMode">
+      <label for="name">Nome</label>
+      <input id="name" type="text" formControlName="name" placeholder="Seu nome completo" />
+    </div>
+
+    <div class="field">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" formControlName="email" placeholder="seu@email.com" />
+    </div>
+
+    <div class="field">
+      <label for="password">Senha</label>
+      <input id="password" type="password" formControlName="password" placeholder="Sua senha" />
+    </div>
+
+    <button type="submit" class="primary-btn">
+      {{ isLoginMode ? 'Entrar' : 'Cadastrar' }}
+    </button>
+  </form>
+
+  <button type="button" class="secondary-btn" (click)="toggleMode()">
+    {{ isLoginMode ? 'Criar conta' : 'Já tenho conta' }}
+  </button>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+</section>

@@ -1,0 +1,26 @@
+<section class="page">
+  <h2>Clientes</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="panel">
+    <div class="field">
+      <label>Nome</label>
+      <input formControlName="name" />
+    </div>
+    <div class="field">
+      <label>E-mail</label>
+      <input formControlName="email" />
+    </div>
+    <div class="field">
+      <label>Telefone</label>
+      <input formControlName="phone" />
+    </div>
+    <button type="submit" class="primary-btn">{{ editingId ? 'Atualizar' : 'Criar' }}</button>
+    <button type="button" class="secondary-btn" (click)="reset()">Limpar</button>
+  </form>
+
+  <ul class="list">
+    <li *ngFor="let customer of customers">
+      <strong>{{ customer.name }}</strong> — {{ customer.email }} — {{ customer.phone }}
+      <button type="button" class="secondary-btn" (click)="edit(customer)">Editar</button>
+    </li>
+  </ul>
+</section>

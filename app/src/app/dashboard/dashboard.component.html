@@ -1,0 +1,37 @@
+<section class="dashboard">
+  <header class="topbar">
+    <div>
+      <h2>Painel do Go Jobs</h2>
+      <p>Consuma os endpoints do backend Go a partir de uma interface Angular.</p>
+    </div>
+    <button class="logout" (click)="logout()">Sair</button>
+  </header>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Clientes</h3>
+      <p *ngIf="!loading && customers.length === 0">Nenhum cliente cadastrado.</p>
+      <ul *ngIf="customers.length">
+        <li *ngFor="let customer of customers">
+          {{ customer.name }} — {{ customer.email }}
+        </li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Projetos</h3>
+      <p *ngIf="!loading && projects.length === 0">Nenhum projeto cadastrado.</p>
+      <ul *ngIf="projects.length">
+        <li *ngFor="let project of projects">
+          {{ project.name }} — R$ {{ project.price }}
+        </li>
+      </ul>
+    </article>
+  </div>
+
+  <nav class="nav-links">
+    <a routerLink="/customers">Gerenciar clientes</a>
+    <a routerLink="/projects">Gerenciar projetos</a>
+    <a routerLink="/b2b">Gerenciar B2B</a>
+  </nav>
+</section>

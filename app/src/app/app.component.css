@@ -1,0 +1,7 @@
+.shell {
+  min-height: 100vh;
+  display: block;
+  padding: 24px;
+  background: transparent;
+  font-family: Inter, Arial, sans-serif;
+}

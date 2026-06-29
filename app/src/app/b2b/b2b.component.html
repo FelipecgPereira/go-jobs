@@ -1,0 +1,35 @@
+<section class="page">
+  <h2>B2B</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="panel">
+    <div class="field">
+      <label>ID do cliente</label>
+      <input type="number" formControlName="customerId" />
+    </div>
+    <div class="field">
+      <label>ID do projeto</label>
+      <input type="number" formControlName="projectId" />
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <select formControlName="status">
+        <option value="pending">Pending</option>
+        <option value="active">Active</option>
+        <option value="closed">Closed</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Início</label>
+      <input type="datetime-local" formControlName="start" />
+    </div>
+    <div class="field">
+      <label>Fim</label>
+      <input type="datetime-local" formControlName="end" />
+    </div>
+    <button type="submit" class="primary-btn">Criar B2B</button>
+    <button type="button" class="secondary-btn" (click)="loadSummary()">Calcular total</button>
+  </form>
+
+  <div class="summary" *ngIf="summary !== null">
+    <strong>Total:</strong> R$ {{ summary }}
+  </div>
+</section>

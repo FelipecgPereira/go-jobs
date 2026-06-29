@@ -1,0 +1,30 @@
+<section class="page">
+  <h2>Projetos</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="panel">
+    <div class="field">
+      <label>Nome</label>
+      <input formControlName="name" />
+    </div>
+    <div class="field">
+      <label>Preço</label>
+      <input type="number" formControlName="price" />
+    </div>
+    <div class="field">
+      <label>Data inicial</label>
+      <input type="date" formControlName="startDate" />
+    </div>
+    <div class="field">
+      <label>Data final</label>
+      <input type="date" formControlName="endDate" />
+    </div>
+    <button type="submit" class="primary-btn">{{ editingId ? 'Atualizar' : 'Criar' }}</button>
+    <button type="button" class="secondary-btn" (click)="reset()">Limpar</button>
+  </form>
+
+  <ul class="list">
+    <li *ngFor="let project of projects">
+      <strong>{{ project.name }}</strong> — R$ {{ project.price }}
+      <button type="button" class="secondary-btn" (click)="edit(project)">Editar</button>
+    </li>
+  </ul>
+</section>

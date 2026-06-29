@@ -1,0 +1,19 @@
+.auth-card {
+  max-width: 460px;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  display: block;
+}
+
+.auth-header h2 { margin-bottom: .5rem; }
+.auth-header p { color: #64748b; margin-bottom: 1.5rem; }
+.field { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+input { padding: .8rem; border: 1px solid #cbd5e1; border-radius: 10px; }
+.primary-btn, .secondary-btn { width: 100%; padding: .8rem 1rem; border: 0; border-radius: 10px; cursor: pointer; margin-top: .7rem; }
+.primary-btn { background: #2563eb; color: white; }
+.secondary-btn { background: #f1f5f9; color: #0f172a; }
+.message { margin-top: 1rem; color: #0f766e; }
