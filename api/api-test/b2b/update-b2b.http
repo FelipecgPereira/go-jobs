@@ -1,9 +1,7 @@
-PUT http://localhost:3000/project/1000
+PUT http://localhost:3000/b2b/10000
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiZXhwIjoxNzgyNzA1Njk5LCJ1c2VyIjoxMDAwMH0.ySP6KRdGey0tt2OvNlqcmfZX7EltqN_REW47HueaIfQ
+
 {
-    "name": "Photo shape v2",
-    "price": 2500.99,
-    "startDate": "2026-07-01T18:00:00Z",
-    "endDate": "2026-07-31T18:00:00Z"
+    "projectId": 10000
 }

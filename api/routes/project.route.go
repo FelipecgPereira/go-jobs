@@ -20,7 +20,7 @@ func createProject(context *gin.Context) {
 
 	project.UserId = context.GetInt64("userId")
 
-	id, err := models.Save(&project)
+	id, err := project.Save()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not create project", "error": err})
 		return

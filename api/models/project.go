@@ -9,7 +9,7 @@ import (
 type Project struct {
 	Id        int64
 	Name      string
-	price     float64
+	Price     float64
 	StartDate time.Time
 	EndDate   time.Time
 	UserId    int64
@@ -17,7 +17,7 @@ type Project struct {
 	updateAt  time.Time
 }
 
-func Save(input *Project) (int64, error) {
+func (input *Project) Save() (int64, error) {
 	query := `
 		INSERT INTO projects (name, price, start_date, end_date, user_id,create_at)
 		VALUES (?,?,?,?,?,?)
@@ -31,7 +31,7 @@ func Save(input *Project) (int64, error) {
 	defer stmt.Close()
 
 	input.createAt = time.Now()
-	result, err := stmt.Exec(input.Name, input.price, input.StartDate, input.EndDate, input.UserId, input.createAt)
+	result, err := stmt.Exec(input.Name, input.Price, input.StartDate, input.EndDate, input.UserId, input.createAt)
 
 	if err != nil {
 		return 0, err
@@ -61,7 +61,7 @@ func GetProjects(input int64) ([]Project, error) {
 
 	for rows.Next() {
 		var project Project
-		err := rows.Scan(&project.Id, &project.Name, &project.price,
+		err := rows.Scan(&project.Id, &project.Name, &project.Price,
 			&project.StartDate, &project.EndDate, &project.UserId)
 		if err != nil {
 			return nil, err
@@ -77,7 +77,7 @@ func GetProjectById(input int64) (*Project, error) {
 	`
 	row := db.DB.QueryRow(query, input)
 	var project Project
-	err := row.Scan(&project.Id, &project.Name, &project.price,
+	err := row.Scan(&project.Id, &project.Name, &project.Price,
 		&project.StartDate, &project.EndDate, &project.UserId)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (input *Project) Update() error {
 	defer stmt.Close()
 
 	input.updateAt = time.Now()
-	_, err = stmt.Exec(input.Name, input.price, input.StartDate, input.EndDate, input.updateAt, input.Id)
+	_, err = stmt.Exec(input.Name, input.Price, input.StartDate, input.EndDate, input.updateAt, input.Id)
 	if err != nil {
 		return err
 	}

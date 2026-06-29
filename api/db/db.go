@@ -84,8 +84,11 @@ func createTables() {
 		customer_id INTEGER,
 		user_id INTEGER,
 		project_id INTEGER,
-		FOREIGN KEY(customer_id) REFERENCES customers(id)
-		FOREIGN KEY(user_id) REFERENCES users(id)
+		status TEXT,
+		create_at DATETIME,
+		update_at DATETIME,
+		FOREIGN KEY(customer_id) REFERENCES customers(id),
+		FOREIGN KEY(user_id) REFERENCES users(id),
 		FOREIGN KEY(project_id) REFERENCES projects(id)
 	);
 	`

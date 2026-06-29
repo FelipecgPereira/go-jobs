@@ -23,4 +23,10 @@ func RegisterRoutes(server *gin.Engine) {
 	projectGroup.GET("", getProjects)
 	projectGroup.GET("/:id", getProjectById)
 
+	b2bGroup := server.Group("/b2b")
+	b2bGroup.Use(middlewares.Autheticate)
+	b2bGroup.POST("/", createB2b)
+	b2bGroup.PUT("/:id", updateB2b)
+	b2bGroup.GET("/sum", sumPayments)
+
 }
